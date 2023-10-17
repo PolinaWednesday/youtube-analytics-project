@@ -22,11 +22,13 @@ class Channel:
 
     @classmethod
     def get_service(cls):
+        """Возвращает экземпляр класса для работы с API вне класса."""
         api_key: str = os.getenv('API_KEY')
         youtube = build('youtube', 'v3', developerKey=api_key)
         return youtube
 
     def to_json(self, file_name):
+        """Сохраняет данные канала в json-файл."""
         data = {
             "channel_id": self.channel_id,
             "title": self.title,
@@ -48,12 +50,14 @@ class Channel:
         print(json.dumps(response, indent=2, ensure_ascii=False))
 
     def __str__(self):
+        """Выводит в консоль информацию о канале."""
         return f"{self.title} ({self.url})"
 
     def __add__(self, other):
         return self.subscriber_count + other.subscriber_count
 
     def __sub__(self, other):
+
         return self.subscriber_count - other.subscriber_count
 
     def __gt__(self, other):
@@ -70,3 +74,4 @@ class Channel:
 
     def __eq__(self, other):
         return self.subscriber_count == other.subscriber_count
+
